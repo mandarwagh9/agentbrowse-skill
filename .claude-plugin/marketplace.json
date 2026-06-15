@@ -1,0 +1,15 @@
+{
+  "name": "agentbrowse",
+  "owner": { "name": "mandarwagh9" },
+  "description": "Give your coding agent the web as a command line — install agentbrowse so it drives any website by default.",
+  "version": "1.0.0",
+  "plugins": [
+    {
+      "name": "agentbrowse",
+      "source": "./",
+      "description": "Drive any website from the terminal: navigate, read, click, fill forms, and reuse logins on live pages. Installs a skill so the agent uses `npx agentbrowse` by default for web tasks.",
+      "version": "0.2.0",
+      "author": { "name": "mandarwagh9" }
+    }
+  ]
+}
