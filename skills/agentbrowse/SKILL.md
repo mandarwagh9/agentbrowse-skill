@@ -46,6 +46,7 @@ npx agentbrowse replay 8 --query page=2  # re-issue it (with your saved login) f
 - **Reading:** `read` is token-bounded (`--max-chars`, default 8000). If it reports more pages, request `--page 2`, etc. Add `--json` to parse `{ title, markdown, page, totalPages, state }`. Every text output ends with a `url | title | links` footer so you always know where you are.
 - **Forms:** `fill -f email=me@x.com -f password=…` then `submit`, or `type <field> "text"` for a single field.
 - **Errors go to stderr** as `{ "error": { code, message } }`. Exit codes: `4` = target not found (re-run `snapshot`/`links` for fresh refs), `3` = navigation, `2` = usage, `5` = daemon.
+- **Safety guard:** only `http(s)` URLs are allowed, and local/private hosts (`localhost`, `127.0.0.1`, private ranges, the `169.254.x` cloud-metadata range) are blocked by default (`blocked_url`, exit 2). To drive a local dev server, set `WEBCLI_ALLOW_LOCAL=1`.
 
 ## Authentication — never type passwords
 

@@ -61,4 +61,6 @@ Each manifest command runs a predefined flow (e.g. open → type → submit → 
 
 ## Exit codes
 
-`0` ok · `1` internal · `2` usage · `3` navigation · `4` target not found (re-run `snapshot`/`links` for fresh refs) · `5` daemon. Errors are written to **stderr** as `{ "error": { code, message } }`.
+`0` ok · `1` internal · `2` usage (incl. `blocked_url`) · `3` navigation · `4` target not found (re-run `snapshot`/`links` for fresh refs) · `5` daemon. Errors are written to **stderr** as `{ "error": { code, message } }`.
+
+**Navigation guard:** only `http(s)` schemes are allowed; local/private/link-local hosts (`localhost`, `127.0.0.1`, `10/172.16/192.168` ranges, `169.254.x` metadata) are blocked by default → `blocked_url` (exit 2). Set `WEBCLI_ALLOW_LOCAL=1` to permit local-dev navigation. Saved session state is written `0600`.
