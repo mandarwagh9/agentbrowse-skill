@@ -3,7 +3,7 @@
   "name": "agentbrowse",
   "displayName": "agentbrowse",
   "description": "Drive any website from the terminal. Installs a skill so the agent uses `npx agentbrowse` to navigate, read, click, fill forms, reuse logins, and capture/replay the JSON APIs a page fetches.",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": { "name": "mandarwagh9" },
   "homepage": "https://www.npmjs.com/package/agentbrowse",
   "repository": "https://github.com/mandarwagh9/agentbrowse-skill",

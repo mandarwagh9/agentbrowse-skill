@@ -8,7 +8,7 @@
       "name": "agentbrowse",
       "source": "./",
       "description": "Drive any website from the terminal: navigate, read, click, fill forms, reuse logins, and capture/replay the JSON APIs a page fetches. Installs a skill so the agent uses `npx agentbrowse` by default for web tasks.",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "author": { "name": "mandarwagh9" }
     }
   ]
