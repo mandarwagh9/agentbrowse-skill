@@ -35,7 +35,7 @@ npx agentbrowse capture 8                # the full JSON body of one call
 npx agentbrowse replay 8 --query page=2  # re-issue it (with your saved login) for fresh data
 ```
 
-- `capture` waits briefly for load-time fetches, so running it right after `open` works. After a click that triggers a fetch, use `capture --wait`.
+- `capture` waits briefly for load-time fetches, so running it right after `open` works. After a click that triggers a fetch, use `capture --wait`. After navigating around, `capture --new` shows only the current page's calls.
 - `capture <id>` is token-bounded like `read` (`--max-chars`, `--page`, `--json` for parsed JSON).
 - `replay <id>` re-issues the captured request inside your session (cookies/auth apply) **without re-rendering the page** — ideal for paging/filtering via repeatable `--query key=value`. Prefer it over another `open` + `read` when you just need more data. Capture ids survive navigation, so `capture 8` → `replay 8` stays valid.
 

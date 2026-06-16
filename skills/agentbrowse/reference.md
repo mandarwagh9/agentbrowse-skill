@@ -18,7 +18,7 @@ Modern sites fetch their content as JSON. These read and re-issue that data laye
 
 | Command | What it does |
 |---|---|
-| `capture` | List the JSON/API calls the current page fetched, newest last, each with a stable `[id]`. Waits briefly for load-time fetches so it works right after `open`; `--wait` waits for a *new* call (e.g. after a click). `--filter <text>`, `--method <m>`, `--max <n>`, `--json`. |
+| `capture` | List the JSON/API calls the current page fetched, newest last, each with a stable `[id]`. Waits briefly for load-time fetches so it works right after `open`; `--wait` waits for a *new* call (e.g. after a click); `--new` shows only calls since the last navigation (this page's data layer). `--filter <text>`, `--method <m>`, `--max <n>`, `--json`. |
 | `capture <id>` | Show one call's request + response body, token-bounded like `read` (`--max-chars`, `--page`, `--json` for parsed JSON). |
 | `replay <id>` | Re-issue a captured call inside the session's auth, **without rendering the page**, for fresh data. `--query key=value` (repeatable) overrides URL params — ideal for pagination/filtering. `--json`, `--max-chars`, `--page`. |
 
