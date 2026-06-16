@@ -63,4 +63,4 @@ Each manifest command runs a predefined flow (e.g. open → type → submit → 
 
 `0` ok · `1` internal · `2` usage (incl. `blocked_url`) · `3` navigation · `4` target not found (re-run `snapshot`/`links` for fresh refs) · `5` daemon. Errors are written to **stderr** as `{ "error": { code, message } }`.
 
-**Navigation guard:** only `http(s)` schemes are allowed; local/private/link-local hosts (`localhost`, `127.0.0.1`, `10/172.16/192.168` ranges, `169.254.x` metadata) are blocked by default → `blocked_url` (exit 2). Set `WEBCLI_ALLOW_LOCAL=1` to permit local-dev navigation. Saved session state is written `0600`.
+**Navigation guard:** only `http(s)` schemes are allowed; local/private hosts (`localhost`, `127.0.0.1`, `10/172.16/192.168`) are blocked by default → `blocked_url` (exit 2). Hostnames are **DNS-resolved** and checked by their actual IP (so rebinding names like `127.0.0.1.nip.io` are caught), and redirects/subresources are re-checked. **Link-local/cloud-metadata (`169.254.x`, `metadata.google.internal`) stays blocked even with `WEBCLI_ALLOW_LOCAL=1`** — that flag only permits loopback/private for local dev. Saved session state is written `0600`.
