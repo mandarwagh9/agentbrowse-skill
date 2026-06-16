@@ -14,7 +14,7 @@ Invoke any command with `npx agentbrowse <command>` (or `agentbrowse <command>` 
 
 ## Data layer (capture & replay)
 
-Modern sites fetch their content as JSON. These read and re-issue that data layer directly — usually far cheaper than scraping rendered HTML, and already structured.
+Modern sites fetch their content as JSON. These read and re-issue that data layer directly — structured, complete, and re-fetchable with your session's auth. (The JSON often carries more fields than the visible page, so it isn't always fewer tokens than `read`; reach for it when you need structured/complete data, pagination, or to skip rendering — and use `read` when you just want the visible text cheaply.)
 
 | Command | What it does |
 |---|---|

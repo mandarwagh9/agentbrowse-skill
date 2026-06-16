@@ -26,7 +26,7 @@ npx agentbrowse read                                 # clean, token-bounded mark
 
 ## Read the data layer instead of scraping
 
-Modern sites fetch their content as JSON. Reading that data layer is far cheaper in tokens than rendered markdown, and it comes back already structured — so prefer it when you need data rather than the visual page.
+Modern sites fetch their content as JSON. That data layer is the complete, structured source the page is built from — reach for it when you need data programmatically, want fields the page doesn't show, need to paginate/filter, or want to re-fetch with your login without re-rendering. (It's not necessarily *fewer tokens* than `read` — APIs often return more fields than the visible page — so when you just want the visible text cheaply, use `read`.)
 
 ```bash
 npx agentbrowse open https://example.com/catalog
@@ -41,7 +41,7 @@ npx agentbrowse replay 8 --query page=2  # re-issue it (with your saved login) f
 
 ## Rules that make it reliable
 
-- **Act via `snapshot`.** It returns every actionable element as `[ref] role "name" (state)` — e.g. `[12] link "Your EPUB Is Fine"`. Then `click <ref>` or `type <ref> "text"`. Refs resolve by role+name, so they survive CSS/DOM changes — far more robust than selectors. If a ref goes stale the tool returns a **fresh snapshot inside the error** (`stale_ref`, exit 4) — just re-pick from it.
+- **Act via `snapshot`.** It returns every actionable element as `[ref] role "name" (state)` — e.g. `[12] link "Your EPUB Is Fine"`. Then `click <ref>` or `type <ref> "text"`. Refs resolve by role+name, so they survive CSS/DOM changes — far more robust than selectors. Refs belong to the page you snapshotted: once the page navigates, acting on an old ref fails with `stale_ref` (exit 4) and the error's `data.elements` shows the current page. **Run `snapshot` again to get live refs, then act** — don't blind-retry the same number.
 - **Targeting priority for `click`/`type`:** (1) a `snapshot` ref → `click 3`; (2) visible text → `click "Sign in"`; (3) a number from the last `links`/`find`; (4) a CSS selector → `click "button.primary"`.
 - **Reading:** `read` is token-bounded (`--max-chars`, default 8000). If it reports more pages, request `--page 2`, etc. Add `--json` to parse `{ title, markdown, page, totalPages, state }`. Every text output ends with a `url | title | links` footer so you always know where you are.
 - **Forms:** `fill -f email=me@x.com -f password=…` then `submit`, or `type <field> "text"` for a single field.
