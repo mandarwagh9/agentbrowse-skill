@@ -1,6 +1,6 @@
 ---
 name: agentbrowse
-description: Drive a real web browser from the terminal with `npx agentbrowse` to navigate, read, and interact with live websites. Use whenever a task needs a real or interactive page rather than a static fetch, such as opening a URL, clicking links or buttons, filling and submitting forms, reading JavaScript-rendered or paginated content as clean markdown, following multi-step flows, or reusing a logged-in session.
+description: Drive a real web browser from the terminal with `npx agentbrowse` to navigate, read, and interact with live websites. Use whenever a task needs a real or interactive page rather than a static fetch, such as opening a URL, clicking links or buttons, filling and submitting forms, reading JavaScript-rendered or paginated content as clean markdown, following multi-step flows, or reusing a logged-in session. It can also capture the JSON APIs a page fetches and replay them with your saved login, so you read structured data instead of scraping rendered HTML.
 ---
 
 # Driving websites with agentbrowse
@@ -23,6 +23,21 @@ npx agentbrowse snapshot                             # list actionable elements 
 npx agentbrowse click 12                             # act by ref
 npx agentbrowse read                                 # clean, token-bounded markdown
 ```
+
+## Read the data layer instead of scraping
+
+Modern sites fetch their content as JSON. Reading that data layer is far cheaper in tokens than rendered markdown, and it comes back already structured — so prefer it when you need data rather than the visual page.
+
+```bash
+npx agentbrowse open https://example.com/catalog
+npx agentbrowse capture                  # list the JSON/API calls the page made, with [ids]
+npx agentbrowse capture 8                # the full JSON body of one call
+npx agentbrowse replay 8 --query page=2  # re-issue it (with your saved login) for fresh data
+```
+
+- `capture` waits briefly for load-time fetches, so running it right after `open` works. After a click that triggers a fetch, use `capture --wait`.
+- `capture <id>` is token-bounded like `read` (`--max-chars`, `--page`, `--json` for parsed JSON).
+- `replay <id>` re-issues the captured request inside your session (cookies/auth apply) **without re-rendering the page** — ideal for paging/filtering via repeatable `--query key=value`. Prefer it over another `open` + `read` when you just need more data. Capture ids survive navigation, so `capture 8` → `replay 8` stays valid.
 
 ## Rules that make it reliable
 

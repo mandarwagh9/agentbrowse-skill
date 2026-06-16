@@ -12,6 +12,18 @@ Invoke any command with `npx agentbrowse <command>` (or `agentbrowse <command>` 
 | `snapshot [url]` | List actionable elements from the accessibility tree as `[ref] role "name" (state)`. `--filter <text>`, `--max <n>` (default 150). **Preferred way to act.** |
 | `find <text...>` | Find elements by visible text; returns numbers reusable by `click`. |
 
+## Data layer (capture & replay)
+
+Modern sites fetch their content as JSON. These read and re-issue that data layer directly — usually far cheaper than scraping rendered HTML, and already structured.
+
+| Command | What it does |
+|---|---|
+| `capture` | List the JSON/API calls the current page fetched, newest last, each with a stable `[id]`. Waits briefly for load-time fetches so it works right after `open`; `--wait` waits for a *new* call (e.g. after a click). `--filter <text>`, `--method <m>`, `--max <n>`, `--json`. |
+| `capture <id>` | Show one call's request + response body, token-bounded like `read` (`--max-chars`, `--page`, `--json` for parsed JSON). |
+| `replay <id>` | Re-issue a captured call inside the session's auth, **without rendering the page**, for fresh data. `--query key=value` (repeatable) overrides URL params — ideal for pagination/filtering. `--json`, `--max-chars`, `--page`. |
+
+Capture ids are monotonic and survive navigation, so `capture 8` → `replay 8` stays valid across page loads. Unknown ids exit `4` (target not found).
+
 ## Interaction
 
 | Command | What it does |
